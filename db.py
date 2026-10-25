@@ -20,3 +20,35 @@ def init():
    c.execute('UPDATE events SET subseries_id=? WHERE championship_id=? AND subseries_id IS NULL',(sub,championship))
   columns=[x['name'] for x in c.execute('PRAGMA table_info(subscriptions)')]
   if 'subseries_csv' not in columns:c.execute('ALTER TABLE subscriptions ADD COLUMN subseries_csv TEXT')
+def init_viewing():
+ with connect() as c:
+  c.execute("""CREATE TABLE IF NOT EXISTS viewing_options (
+   id INTEGER PRIMARY KEY AUTOINCREMENT, championship_id TEXT NOT NULL,
+   subseries_id TEXT, country_code TEXT NOT NULL, provider TEXT NOT NULL,
+   platform_type TEXT NOT NULL, access_type TEXT NOT NULL, url TEXT,
+   coverage_note TEXT, source_url TEXT, verified_at TEXT,
+   UNIQUE(championship_id,subseries_id,country_code,provider,platform_type))""")
+  c.execute("""CREATE TABLE IF NOT EXISTS programme_listings (
+   id INTEGER PRIMARY KEY AUTOINCREMENT, session_id TEXT REFERENCES sessions(id),
+   championship_id TEXT NOT NULL, country_code TEXT NOT NULL,
+   provider TEXT NOT NULL, channel TEXT, platform_type TEXT NOT NULL,
+   access_type TEXT NOT NULL, start_utc TEXT NOT NULL, end_utc TEXT,
+   programme_title TEXT NOT NULL, broadcast_type TEXT NOT NULL,
+   source_url TEXT NOT NULL, checked_at TEXT NOT NULL,
+   match_status TEXT NOT NULL DEFAULT 'unmatched',
+   UNIQUE(country_code,provider,programme_title,start_utc))""")
+  c.execute("CREATE INDEX IF NOT EXISTS idx_programmes_session ON programme_listings(session_id)")
+  options=[
+   ('nascar','nascar-cup','GB','Premier Sports','tv','subscription','https://www.premiersports.com/','UK rights holder; exact channel varies by event','https://www.premiersports.com/'),
+   ('nascar','nascar-cup','US','NASCAR US broadcast partners','tv_or_stream','subscription','https://www.nascar.com/news-media/2026/10/18/nascar-tv-guide/','FOX/FS1, Prime Video, TNT Sports, NBC/USA vary by race; US access restrictions apply','https://www.nascar.com/news-media/2026/10/18/nascar-tv-guide/'),
+   ('indycar','indycar-main','GB','Sky Sports','tv','subscription','https://www.skysports.com/watch','Channel varies; check Sky Sports F1, Mix and other channels','https://www.indycar.com/news/2026/02/02-19-international-tv'),
+   ('indycar','indycar-main','INT','INDYCAR LIVE','official_stream','varies','https://www.indycarlive.com/','Sessions and territory eligibility vary; verify access before watching','https://www.indycar.com/news/2026/02/02-19-international-tv'),
+   ('f1','f1','GB','Sky Sports F1','tv','subscription','https://www.skysports.com/f1','Live sessions; exact programme airtimes require guide matching','https://www.skysports.com/f1'),
+   ('f1','f1','GB','Channel 4','tv','free','https://www.channel4.com/','Highlights and selected live coverage; scheduled times unconfirmed','https://www.channel4.com/'),
+   ('motogp','motogp-main','GB','TNT Sports','tv','subscription','https://www.tntsports.co.uk/','Live coverage; confirm session-specific airtimes','https://www.tntsports.co.uk/'),
+   ('wec','wec-main','GB','TNT Sports','tv','subscription','https://www.tntsports.co.uk/','Live coverage; confirm race-specific airtimes','https://www.tntsports.co.uk/'),
+   ('imsa','imsa-weathertech','INT','IMSA TV','official_stream','free','https://www.imsa.com/tvlive/','Availability subject to local rights and event coverage','https://www.imsa.com/tvlive/')
+  ]
+  c.executemany("""INSERT OR IGNORE INTO viewing_options
+   (championship_id,subseries_id,country_code,provider,platform_type,access_type,url,coverage_note,source_url)
+   VALUES(?,?,?,?,?,?,?,?,?)""",options)
