@@ -5,8 +5,9 @@ from fastapi import FastAPI,HTTPException,Query
 from fastapi.responses import HTMLResponse,Response,FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
-from db import init,connect,SERIES,SUBSERIES,DEFAULT_SUBSERIES,ROOT
+from db import init,init_viewing,connect,SERIES,SUBSERIES,DEFAULT_SUBSERIES,ROOT
 init()
+init_viewing()
 app=FastAPI(title='Motorsport Hub',version='0.4.0')
 app.mount('/static',StaticFiles(directory=ROOT/'static'),name='static')
 @app.get('/')
@@ -90,3 +91,15 @@ def event_windows(start:str|None=None,end:str|None=None,subseries:str|None=None)
   sql+=' AND e.subseries_id IN ('+','.join('?' for _ in subs)+')';args+=subs
  sql+=' ORDER BY w.start_date'
  with connect() as c:return [dict(r) for r in c.execute(sql,args)]
+@app.get('/api/viewing')
+def viewing(country:str='GB',series:str='',session_id:str|None=None):
+ country=country.upper()
+ with connect() as c:
+  sql="SELECT * FROM viewing_options WHERE country_code IN (?, 'INT', 'US')"
+  args=[country]
+  if series in SERIES:sql+=" AND championship_id=?";args.append(series)
+  options=[dict(r) for r in c.execute(sql+" ORDER BY CASE country_code WHEN ? THEN 0 WHEN 'INT' THEN 1 ELSE 2 END, CASE access_type WHEN 'free' THEN 0 ELSE 1 END",args+[country])]
+  listings=[]
+  if session_id:
+   listings=[dict(r) for r in c.execute("SELECT * FROM programme_listings WHERE session_id=? ORDER BY CASE WHEN country_code=? THEN 0 ELSE 1 END,start_utc",(session_id,country))]
+ return {'country':country,'options':options,'confirmed_listings':listings,'notice':'Options describe general rights, not verified session-specific transmissions. International availability may be restricted.'}
