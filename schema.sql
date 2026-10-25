@@ -1,0 +1,9 @@
+PRAGMA foreign_keys=ON;
+CREATE TABLE IF NOT EXISTS championships (id TEXT PRIMARY KEY, name TEXT NOT NULL, color TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS events (id TEXT PRIMARY KEY, championship_id TEXT NOT NULL REFERENCES championships(id), name TEXT NOT NULL, venue TEXT, country TEXT, season INTEGER, source_url TEXT, updated_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS sessions (id TEXT PRIMARY KEY, event_id TEXT NOT NULL REFERENCES events(id) ON DELETE CASCADE, name TEXT NOT NULL, kind TEXT NOT NULL, start_utc TEXT NOT NULL, end_utc TEXT, status TEXT NOT NULL DEFAULT 'scheduled', status_source TEXT NOT NULL DEFAULT 'schedule', source_url TEXT, updated_at TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS idx_sessions_start ON sessions(start_utc);
+CREATE TABLE IF NOT EXISTS broadcast (id INTEGER PRIMARY KEY AUTOINCREMENT, championship_id TEXT NOT NULL REFERENCES championships(id), country_code TEXT NOT NULL, broadcaster TEXT NOT NULL, url TEXT, verified_at TEXT, UNIQUE(championship_id,country_code,broadcaster));
+CREATE TABLE IF NOT EXISTS subscriptions (id TEXT PRIMARY KEY, token TEXT UNIQUE NOT NULL, series_csv TEXT NOT NULL, kinds_csv TEXT NOT NULL, created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS reminders (id TEXT PRIMARY KEY, subscription_id TEXT NOT NULL REFERENCES subscriptions(id), session_id TEXT NOT NULL REFERENCES sessions(id), minutes_before INTEGER NOT NULL, sent_at TEXT, UNIQUE(subscription_id,session_id,minutes_before));
+CREATE TABLE IF NOT EXISTS source_runs (id INTEGER PRIMARY KEY AUTOINCREMENT, source TEXT NOT NULL, started_at TEXT NOT NULL, finished_at TEXT, status TEXT NOT NULL, records INTEGER NOT NULL DEFAULT 0, message TEXT);
