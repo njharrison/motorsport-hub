@@ -1,4 +1,4 @@
-import csv,io,os,secrets
+import csv,io,os,secrets,threading,time
 from datetime import datetime,timezone,timedelta
 from pathlib import Path
 from fastapi import FastAPI,HTTPException,Query
@@ -8,7 +8,16 @@ from pydantic import BaseModel
 from db import init,init_viewing,connect,SERIES,SUBSERIES,DEFAULT_SUBSERIES,ROOT
 init()
 init_viewing()
-app=FastAPI(title='Motorsport Hub',version='0.4.0')
+app=FastAPI(title='Motorsport Hub',version='0.7.1')
+def epg_worker():
+ from epg import collect
+ while True:
+  try:collect()
+  except Exception as exc:print('EPG_WORKER_ERROR',repr(exc),flush=True)
+  time.sleep(12*3600)
+@app.on_event('startup')
+def start_epg():
+ threading.Thread(target=epg_worker,daemon=True,name='epg-refresh').start()
 app.mount('/static',StaticFiles(directory=ROOT/'static'),name='static')
 @app.get('/')
 def home():return FileResponse(ROOT/'static'/'index.html')
@@ -103,3 +112,11 @@ def viewing(country:str='GB',series:str='',session_id:str|None=None):
   if session_id:
    listings=[dict(r) for r in c.execute("SELECT * FROM programme_listings WHERE session_id=? ORDER BY CASE WHEN country_code=? THEN 0 ELSE 1 END,start_utc",(session_id,country))]
  return {'country':country,'options':options,'confirmed_listings':listings,'notice':'Options describe general rights, not verified session-specific transmissions. International availability may be restricted.'}
+
+@app.get('/api/epg')
+def epg_listings(country:str='GB',series:str='',days:int=Query(7,ge=1,le=15)):
+ now=datetime.now(timezone.utc)
+ start=(now-timedelta(hours=6)).isoformat();end=(now+timedelta(days=days)).isoformat()
+ sql="SELECT * FROM programme_listings WHERE country_code=? AND start_utc BETWEEN ? AND ?";args=[country.upper(),start,end]
+ if series in SERIES:sql+=" AND championship_id=?";args.append(series)
+ with connect() as c:return {'listings':[dict(r) for r in c.execute(sql+" ORDER BY start_utc",args)],'note':'Programme listings are sourced from XMLTV guides. Candidate matches are not confirmed; live_unverified means the guide does not establish whether transmission is live.'}
