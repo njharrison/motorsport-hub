@@ -36,8 +36,8 @@ document.addEventListener('click',async ev=>{
  try{
   const r=await api('/api/viewing?country=GB&series='+encodeURIComponent(btn.dataset.series)+'&session_id='+encodeURIComponent(btn.dataset.session));
   const options=r.options.filter(o=>o.country_code==='GB'||o.country_code==='INT'||o.country_code==='US');
-  const listings=r.confirmed_listings.filter(x=>x.match_status==='confirmed');
-  target.innerHTML=(listings.length?'<strong>Confirmed programme listings</strong>'+listings.map(x=>'<p>'+html(x.provider)+' · '+html(x.channel||x.platform_type)+' · '+html(x.start_utc)+' · '+html(x.broadcast_type)+'</p>').join(''):'<small>No session-specific TV listing confirmed yet.</small>')+
+  const listings=r.confirmed_listings;
+  target.innerHTML=(listings.length?'<strong>EPG programme matches (check before watching)</strong>'+listings.map(x=>'<p>'+html(x.channel||x.provider)+' · '+html(new Date(x.start_utc).toLocaleString('en-GB',{timeZone:'Europe/London',weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}))+' UK · '+html(x.programme_title)+' · '+html(x.match_status==='confirmed'?'Confirmed':'Possible match')+'</p>').join(''):'<small>No session-specific TV listing confirmed yet.</small>')+
    options.map(o=>'<p><b>'+html(o.country_code==='GB'?'🇬🇧 UK':o.country_code==='US'?'🇺🇸 US':'🌍 International')+' · '+html(o.provider)+'</b> · '+html(o.platform_type.replaceAll('_',' '))+' · '+html(o.access_type)+'<br><small>'+html(o.coverage_note||'')+'</small> '+(o.url?'<a target="_blank" rel="noopener noreferrer" href="'+html(o.url)+'">Provider ↗</a>':'')+'</p>').join('')+
    '<small>Rights information only unless marked confirmed; availability may vary by territory.</small>';
  }catch(e){target.textContent='Viewing information unavailable: '+e.message}
