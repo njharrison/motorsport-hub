@@ -11,14 +11,30 @@ PATTERNS=[('nascar',r'\bnascar\b|\bcup series\b|daytona 500|talladega|brickyard 
 def dt(s):
  return datetime.strptime(s[:14],'%Y%m%d%H%M%S').replace(tzinfo=timezone(timedelta(hours=int(s[15:18])*(1 if s[14:15]=='+' else -1),minutes=int(s[18:20])*(1 if s[14:15]=='+' else -1)))).astimezone(timezone.utc).isoformat()
 def normal(s):return re.sub(r'[^a-z0-9]+',' ',s.lower()).strip()
-def download(url):
- req=urllib.request.Request(url,headers={'User-Agent':'MotorsportHub/0.7 (XMLTV schedule research)'})
- with urllib.request.urlopen(req,timeout=35) as resp:
-  data=resp.read(35_000_001)
- if len(data)>35_000_000:raise ValueError('Guide exceeds 35 MB download limit')
- if data[:2]==b'\x1f\x8b':data=gzip.decompress(data)
- if len(data)>110_000_000:raise ValueError('Guide exceeds 110 MB expanded limit')
- return data
+def stream(url):
+ req=urllib.request.Request(url,headers={'User-Agent':'MotorsportHub/0.7 XMLTV reader'})
+ response=urllib.request.urlopen(req,timeout=25)
+ if url.endswith('.gz') or response.headers.get('Content-Encoding')=='gzip':
+  return response,gzip.GzipFile(fileobj=response)
+ return response,response
+def programmes(url):
+ response,source=stream(url)
+ try:
+  names={};selected=set();count=0
+  for event,el in ET.iterparse(source,events=('end',)):
+   if el.tag=='channel':
+    cid=el.get('id');labels=[normal(x.text or '') for x in el.findall('display-name')]
+    if any(any(target in label or label in target for target in CHANNELS if len(label)>5) for label in labels):
+     selected.add(cid);names[cid]=next((x for x in labels if x),'')
+    el.clear()
+   elif el.tag=='programme':
+    if el.get('channel') in selected:
+     yield names.get(el.get('channel'),el.get('channel')),el.get('start',''),el.get('stop',''),(el.findtext('title') or '').strip(),(el.findtext('desc') or '')[:180]
+    el.clear()
+    count+=1
+    if count>450000:break
+ finally:
+  source.close();response.close()
 def collect():
  init_viewing();total=0;reports=[]
  now=datetime.now(timezone.utc);cutoff=(now-timedelta(days=1)).isoformat();end=(now+timedelta(days=15)).isoformat()
@@ -26,21 +42,14 @@ def collect():
   sessions=[dict(r) for r in c.execute("""SELECT s.id,s.name,s.start_utc,e.name event_name,e.championship_id FROM sessions s JOIN events e ON s.event_id=e.id WHERE s.start_utc BETWEEN ? AND ?""",(cutoff,end))]
  for provider,url in SOURCES:
   try:
-   root=ET.fromstring(download(url))
-   names={x.get('id'): [normal(y.text or '') for y in x.findall('display-name')] for x in root.findall('channel')}
-   eligible={cid for cid,labels in names.items() if any(any(target in label or label in target for target in CHANNELS if len(label)>5) for label in labels)}
    rows=[]
-   for p in root.findall('programme'):
-    cid=p.get('channel')
-    if cid not in eligible:continue
-    title=(p.findtext('title') or '').strip();desc=(p.findtext('desc') or '').strip()
+   for channel,raw_start,raw_stop,title,desc in programmes(url):
     content=normal(title+' '+desc[:180])
     series=next((key for key,pat in PATTERNS if re.search(pat,content)),None)
     if not series:continue
-    try:start=dt(p.get('start',''));stop=dt(p.get('stop','')) if p.get('stop') else None
+    try:start=dt(raw_start);stop=dt(raw_stop) if raw_stop else None
     except (ValueError,TypeError):continue
     if not cutoff<=start<=end:continue
-    channel=next((x for x in names[cid] if x),cid)
     is_highlights=bool(re.search(r'highlights|replay|review|recap|repeat',content))
     kind='highlights' if is_highlights else 'live_unverified'
     match=None;match_status='unmatched'
@@ -55,7 +64,7 @@ def collect():
    with connect() as c:
     c.execute("DELETE FROM programme_listings WHERE provider=? AND source_url=?",(provider,url))
     c.executemany("""INSERT OR IGNORE INTO programme_listings(session_id,championship_id,country_code,provider,channel,platform_type,access_type,start_utc,end_utc,programme_title,broadcast_type,source_url,checked_at,match_status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",rows)
-   total+=len(rows);reports.append(f'{provider}: {len(rows)} relevant programmes, {len(eligible)} sports channels')
+   total+=len(rows);reports.append(f'{provider}: {len(rows)} relevant programmes, streamed XMLTV')
   except Exception as exc:reports.append(f'{provider}: ERROR {type(exc).__name__}: {exc}')
  print('EPG_IMPORT '+ ' | '.join(reports),flush=True)
  return {'programmes':total,'sources':reports}
