@@ -1,1 +1,10 @@
-{"build":{"builder":"NIXPACKS"},"deploy":{"startCommand":"uvicorn app:app --host 0.0.0.0 --port $PORT","healthcheckPath":"/api/series","restartPolicyType":"ON_FAILURE"}}
+{
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "startCommand": "sh -c 'echo STARTING_2026_IMPORT; python -u ingest.py --year 2026; echo IMPORT_FINISHED; exec uvicorn app:app --host 0.0.0.0 --port $PORT'",
+    "healthcheckPath": "/api/series",
+    "restartPolicyType": "ON_FAILURE"
+  }
+}
