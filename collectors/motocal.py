@@ -42,14 +42,14 @@ def collect(year,provider):
     try:end=to_utc(component.decoded('DTEND'))
     except ValueError:pass
    lower=title.lower()
-   kind='qualifying' if 'qualif' in lower or 'shootout' in lower else 'practice' if 'practice' in lower or 'fp' in lower else 'sprint' if 'sprint' in lower else 'warmup' if 'warm' in lower else 'race'
+   kind='qualifying' if 'qualif' in lower or 'hyperpole' in lower or 'shootout' in lower else 'practice' if 'practice' in lower or 'fp' in lower else 'sprint' if 'sprint' in lower else 'warmup' if 'warm' in lower else 'race'
    items.append((uid,title,location,start,end,kind))
   if not items:raise ValueError(f'{provider}: source returned no timed sessions for {year}')
   # The upstream ICS has one UID per SESSION, not per race weekend.
   # Group by venue and the nearest race session (within 4 days), preserving
   # separate MotoGP/Moto2/Moto3 weekends as independent subseries.
   def clean_name(title):
-   name=re.sub(r'(?i)\\b(free practice [1-4]|practice [1-4]?|fp[1-4]|qualifying [12]?|qualifying|q[12]|sprint race|sprint|warm.?up|race|shootout)\\b',' ',title)
+   name=re.sub(r'(?i)\\b(free practice [1-4]|practice [1-4]?|fp[1-4]|qualifying [12]?|qualifying|hyperpole|q[12]|sprint race|sprint|warm.?up|race|shootout)\\b',' ',title)
    name=re.sub(r'(?i)\\b(motogp|moto2|moto3|formula 2|formula 3|formula e|fia wec|wec)\\b',' ',name)
    return re.sub(r'\\s+',' ',name).strip(' -–—:|,')
   groups=defaultdict(list)
@@ -70,7 +70,7 @@ def collect(year,provider):
     candidates=[clean_name(x[1]) for x in group]
     event_name=max((x for x in candidates if x),key=len,default='')
     # Prefer the race's name, but don't allow generic "Race" to hide the GP.
-    if race_name and len(race_name)>len(event_name)//2:event_name=race_name
+    if race_name and (provider=='wec' or len(race_name)>len(event_name)//2):event_name=race_name
     if not event_name or event_name.lower() in {'grand prix','gp','main'}:
      event_name=next((x[2] for x in group if x[2]),'Unknown event')
     if not re.search(r'(?i)grand prix|\\bgp\\b|prix|round|eprix|24 hours|6 hours|8 hours',event_name):
@@ -84,6 +84,7 @@ def collect(year,provider):
     for uid,title,location,start,end,kind in group:
      sid='motocal-'+provider+'-'+hashlib.sha256((provider+'|'+uid).encode()).hexdigest()[:24]+'-session'
      session_name=re.sub(r'(?i)^.*?\\b(free practice [1-4]|practice [1-4]?|fp[1-4]|qualifying [12]?|qualifying|q[12]|sprint race|sprint|warm.?up|race|shootout)\\b.*$',r'\\1',title).strip()
+     if provider=='wec' and 'hyperpole' in title.lower():session_name='Hyperpole'
      if not session_name or session_name==title:session_name=title
      db.execute('''INSERT INTO sessions(id,event_id,name,kind,start_utc,end_utc,source_url,updated_at)
       VALUES(?,?,?,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET event_id=excluded.event_id,name=excluded.name,kind=excluded.kind,start_utc=excluded.start_utc,end_utc=excluded.end_utc,updated_at=excluded.updated_at''',
