@@ -21,16 +21,19 @@ def programmes(url):
  response,source=stream(url)
  try:
   names={};selected=set();count=0
-  for event,el in ET.iterparse(source,events=('end',)):
+  parser=ET.iterparse(source,events=('start','end'))
+  _,root=next(parser)
+  for event,el in parser:
+   if event!='end':continue
    if el.tag=='channel':
     cid=el.get('id');labels=[normal(x.text or '') for x in el.findall('display-name')]
     if any(any(target in label or label in target for target in CHANNELS if len(label)>5) for label in labels):
      selected.add(cid);names[cid]=next((x for x in labels if x),'')
-    el.clear()
+    el.clear();root.clear()
    elif el.tag=='programme':
     if el.get('channel') in selected:
      yield names.get(el.get('channel'),el.get('channel')),el.get('start',''),el.get('stop',''),(el.findtext('title') or '').strip(),(el.findtext('desc') or '')[:180]
-    el.clear()
+    el.clear();root.clear()
     count+=1
     if count>450000:break
  finally:
