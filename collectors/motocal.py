@@ -57,7 +57,7 @@ def collect(year,provider):
    uid,title,location,start,end,kind=item
    d=datetime.fromisoformat(start)
    # Friday-Monday sessions belong to the same race weekend.
-   anchor=(d-timedelta(days=(d.weekday()-4)%7)).date().isoformat()
+   anchor=(d-timedelta(days=d.weekday())).date().isoformat()
    candidate=clean_name(title)
    venue=location.strip().lower()
    key=(venue or candidate.lower(),anchor)
