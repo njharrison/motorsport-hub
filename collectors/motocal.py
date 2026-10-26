@@ -1,9 +1,10 @@
 """Import supported series from the MIT-licensed motorsport-calendar CLI.
 Install with: pip install motorsport-calendar icalendar
 """
-import subprocess,sys,tempfile,os
+import subprocess,sys,tempfile,os,re,hashlib
+from collections import defaultdict
 from pathlib import Path
-from datetime import datetime,timezone
+from datetime import datetime,timezone,timedelta
 from db import connect
 
 PROVIDERS={
@@ -44,13 +45,49 @@ def collect(year,provider):
    kind='qualifying' if 'qualif' in lower or 'shootout' in lower else 'practice' if 'practice' in lower or 'fp' in lower else 'sprint' if 'sprint' in lower else 'warmup' if 'warm' in lower else 'race'
    items.append((uid,title,location,start,end,kind))
   if not items:raise ValueError(f'{provider}: source returned no timed sessions for {year}')
+  # The upstream ICS has one UID per SESSION, not per race weekend.
+  # Group by venue and the nearest race session (within 4 days), preserving
+  # separate MotoGP/Moto2/Moto3 weekends as independent subseries.
+  def clean_name(title):
+   name=re.sub(r'(?i)\\b(free practice [1-4]|practice [1-4]?|fp[1-4]|qualifying [12]?|qualifying|q[12]|sprint race|sprint|warm.?up|race|shootout)\\b',' ',title)
+   name=re.sub(r'(?i)\\b(motogp|moto2|moto3|formula 2|formula 3|formula e|fia wec|wec)\\b',' ',name)
+   return re.sub(r'\\s+',' ',name).strip(' -–—:|,')
+  groups=defaultdict(list)
+  for item in items:
+   uid,title,location,start,end,kind=item
+   d=datetime.fromisoformat(start)
+   # Friday-Monday sessions belong to the same race weekend.
+   anchor=(d-timedelta(days=(d.weekday()-4)%7)).date().isoformat()
+   candidate=clean_name(title)
+   venue=location.strip().lower()
+   key=(venue or candidate.lower(),anchor)
+   groups[key].append(item)
   now=datetime.now(timezone.utc).isoformat()
   with connect() as db:
-   for uid,title,location,start,end,kind in items:
-    # Stable upstream UID avoids duplicate events across refreshes.
-    import hashlib
-    ident=hashlib.sha256((provider+'|'+uid).encode()).hexdigest()[:24]
-    event_id=f'motocal-{provider}-{ident}'
-    db.execute('''INSERT INTO events(id,championship_id,name,venue,season,source_url,updated_at,subseries_id) VALUES(?,?,?,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET name=excluded.name,venue=excluded.venue,updated_at=excluded.updated_at''',(event_id,championship,title,location,year,'https://github.com/naviss29/motorsport-calendar',now,subseries))
-    db.execute('''INSERT INTO sessions(id,event_id,name,kind,start_utc,end_utc,source_url,updated_at) VALUES(?,?,?,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET name=excluded.name,kind=excluded.kind,start_utc=excluded.start_utc,end_utc=excluded.end_utc,updated_at=excluded.updated_at''',(event_id+'-session',event_id,title,kind,start,end,'https://github.com/naviss29/motorsport-calendar',now))
+   for (venue_key,anchor),group in groups.items():
+    race=next((x for x in group if x[5]=='race' and 'sprint' not in x[1].lower()),group[-1])
+    race_name=clean_name(race[1])
+    candidates=[clean_name(x[1]) for x in group]
+    event_name=max((x for x in candidates if x),key=len,default='')
+    # Prefer the race's name, but don't allow generic "Race" to hide the GP.
+    if race_name and len(race_name)>len(event_name)//2:event_name=race_name
+    if not event_name or event_name.lower() in {'grand prix','gp','main'}:
+     event_name=next((x[2] for x in group if x[2]),'Unknown event')
+    if not re.search(r'(?i)grand prix|\\bgp\\b|prix|round|eprix|24 hours|6 hours|8 hours',event_name):
+     if provider in {'motogp','moto2','moto3'}:event_name+=' Grand Prix'
+    ident=hashlib.sha256((provider+'|'+venue_key+'|'+anchor).encode()).hexdigest()[:24]
+    event_id=f'motocal-{provider}-weekend-{ident}'
+    location=race[2]
+    db.execute('''INSERT INTO events(id,championship_id,name,venue,season,source_url,updated_at,subseries_id)
+     VALUES(?,?,?,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET name=excluded.name,venue=excluded.venue,updated_at=excluded.updated_at''',
+     (event_id,championship,event_name,location,year,'https://github.com/naviss29/motorsport-calendar',now,subseries))
+    for uid,title,location,start,end,kind in group:
+     sid='motocal-'+provider+'-'+hashlib.sha256((provider+'|'+uid).encode()).hexdigest()[:24]+'-session'
+     session_name=re.sub(r'(?i)^.*?\\b(free practice [1-4]|practice [1-4]?|fp[1-4]|qualifying [12]?|qualifying|q[12]|sprint race|sprint|warm.?up|race|shootout)\\b.*$',r'\\1',title).strip()
+     if not session_name or session_name==title:session_name=title
+     db.execute('''INSERT INTO sessions(id,event_id,name,kind,start_utc,end_utc,source_url,updated_at)
+      VALUES(?,?,?,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET event_id=excluded.event_id,name=excluded.name,kind=excluded.kind,start_utc=excluded.start_utc,end_utc=excluded.end_utc,updated_at=excluded.updated_at''',
+      (sid,event_id,session_name,kind,start,end,'https://github.com/naviss29/motorsport-calendar',now))
+   # Old per-session events are now orphaned; remove only these legacy records.
+   db.execute("""DELETE FROM events WHERE id LIKE ? AND season=? AND id NOT IN (SELECT event_id FROM sessions)""",(f'motocal-{provider}-%',year))
   return len(items)
