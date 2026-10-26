@@ -17,7 +17,7 @@ def epg_worker():
   time.sleep(12*3600)
 @app.on_event('startup')
 def start_epg():
- pass  # EPG worker temporarily disabled pending streaming parser
+ threading.Thread(target=epg_worker,daemon=True,name='epg-refresh').start()
 app.mount('/static',StaticFiles(directory=ROOT/'static'),name='static')
 @app.get('/')
 def home():return FileResponse(ROOT/'static'/'index.html')
