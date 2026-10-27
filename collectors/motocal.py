@@ -71,6 +71,21 @@ def collect(year,provider):
     event_name=max((x for x in candidates if x),key=len,default='')
     # Prefer the race's name, but don't allow generic "Race" to hide the GP.
     if race_name and (provider=='wec' or len(race_name)>len(event_name)//2):event_name=race_name
+    if provider=='wec':
+     # The ICS exporter may reduce an official event to a bare "Race".
+     # Prefer the event's circuit/location over a session-type label.
+     wec_names={
+      'qatar':'1812 km of Qatar','lusail':'1812 km of Qatar',
+      'imola':'6 Hours of Imola','spa':'6 Hours of Spa-Francorchamps',
+      'le mans':'24 Hours of Le Mans','sarthe':'24 Hours of Le Mans',
+      'interlagos':'6 Hours of São Paulo','sao paulo':'6 Hours of São Paulo',
+      'austin':'Lone Star Le Mans','cota':'Lone Star Le Mans','circuit of the americas':'Lone Star Le Mans',
+      'fuji':'6 Hours of Fuji','bahrain':'8 Hours of Bahrain','sakhir':'8 Hours of Bahrain'}
+     evidence=' '.join([venue_key]+[x[1]+' '+x[2] for x in group]).lower()
+     official_name=next((name for token,name in wec_names.items() if token in evidence),None)
+     if official_name:event_name=official_name
+     elif event_name.lower() in {'race','hyperpole','qualifying','practice','free practice','warm up','warm-up'}:
+      event_name=(location or venue_key).strip()+' WEC'
     if not event_name or event_name.lower() in {'grand prix','gp','main'}:
      event_name=next((x[2] for x in group if x[2]),'Unknown event')
     if not re.search(r'(?i)grand prix|\\bgp\\b|prix|round|eprix|24 hours|6 hours|8 hours',event_name):
