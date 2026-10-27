@@ -30,18 +30,6 @@ def collect(year,provider):
   result=subprocess.run([sys.executable,'-m','motorsport_calendar',f'generate-{command}',str(year),str(path)],capture_output=True,text=True,encoding="utf-8",errors="replace",env=env,timeout=120)
   if result.returncode or not path.exists():raise RuntimeError((result.stderr or result.stdout or 'No calendar produced')[-700:])
   cal=Calendar.from_ical(path.read_bytes())
-  # One-off diagnostic: inspect unmodified upstream WEC VEVENT properties.
-  # Logged before the importer extracts or rewrites any fields.
-  if provider=='wec':
-   import json
-   for n,component in enumerate(cal.walk('VEVENT')):
-    if n>=6:break
-    fields={}
-    for key in component.keys():
-     value=component.get(key)
-     if isinstance(value,list):fields[str(key)]=[str(v)[:400] for v in value]
-     else:fields[str(key)]=str(value)[:400]
-    print('WEC_RAW_VEVENT '+json.dumps({'index':n,'properties':fields},ensure_ascii=False),flush=True)
   items=[]
   for component in cal.walk('VEVENT'):
    try:start=to_utc(component.decoded('DTSTART'))
@@ -72,7 +60,8 @@ def collect(year,provider):
    anchor=(d-timedelta(days=d.weekday())).date().isoformat()
    candidate=clean_name(title)
    venue=location.strip().lower()
-   key=(venue or candidate.lower(),anchor)
+   wec_event=re.match(r'^wec-\d+-\d+@motorsport-calendar-',uid,re.I) if provider=='wec' else None
+   key=(wec_event.group(0).rstrip('-') if wec_event else (venue or candidate.lower()),'uid' if wec_event else anchor)
    groups[key].append(item)
   now=datetime.now(timezone.utc).isoformat()
   with connect() as db:
