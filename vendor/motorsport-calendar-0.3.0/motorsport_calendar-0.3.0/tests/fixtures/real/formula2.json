@@ -1,0 +1,34 @@
+{
+  "races": [
+    {
+      "name": "Australian",
+      "location": "Melbourne",
+      "latitude": -37.8373,
+      "longitude": 144.9666,
+      "round": 1,
+      "slug": "melbourne",
+      "localeKey": "melbourne",
+      "sessions": {
+        "practice": "2025-03-13T23:00:00Z",
+        "qualifying": "2025-03-14T06:30:00Z",
+        "sprint": "2025-03-15T03:15:00Z",
+        "feature": "2025-03-16T00:30:00Z"
+      }
+    },
+    {
+      "name": "Bahrain",
+      "location": "Sakhir",
+      "latitude": 26.037,
+      "longitude": 50.5112,
+      "round": 2,
+      "slug": "bahrain",
+      "localeKey": "bahrain",
+      "sessions": {
+        "practice": "2025-04-11T09:05:00Z",
+        "qualifying": "2025-04-11T13:55:00Z",
+        "sprint": "2025-04-12T14:15:00Z",
+        "feature": "2025-04-13T11:25:00Z"
+      }
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "races": [
+    {
+      "name": "Sao Paulo ePrix",
+      "location": "Sao Paulo",
+      "latitude": 0,
+      "longitude": 0,
+      "round": 1,
+      "slug": "sao-paulo-eprix",
+      "localeKey": "sao-paulo-eprix",
+      "sessions": {
+        "practice1": "2024-12-06T20:00:00Z",
+        "practice2": "2024-12-07T10:30:00Z",
+        "qualifying": "2024-12-07T12:40:00Z",
+        "race": "2024-12-07T17:05:00Z"
+      }
+    },
+    {
+      "name": "Mexico City ePrix",
+      "location": "Mexico",
+      "latitude": 9.00671,
+      "longitude": -79.5372,
+      "round": 2,
+      "slug": "mexico-city-eprix",
+      "localeKey": "mexico-city-eprix",
+      "sessions": {
+        "practice1": "2025-01-10T23:00:00Z",
+        "practice2": "2025-01-11T13:30:00Z",
+        "qualifying": "2025-01-11T15:40:00Z",
+        "race": "2025-01-11T20:05:00Z"
+      }
+    }
+  ]
+}

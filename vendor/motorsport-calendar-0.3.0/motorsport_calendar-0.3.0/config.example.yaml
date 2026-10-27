@@ -1,0 +1,48 @@
+# motorsport-calendar — exemple de configuration
+# Copier ce fichier en config.yaml et adapter les valeurs.
+# Toutes les clés sont optionnelles : les valeurs par défaut s'appliquent si absentes.
+
+# Fuseau horaire par défaut pour l'affichage (IANA, ex: Europe/Paris, UTC, America/New_York)
+timezone: Europe/Paris
+
+cache:
+  # Activer / désactiver le cache disque
+  enabled: true
+  # Répertoire de stockage des fichiers cache
+  path: ~/.cache/motorsport-calendar
+  # Durée de vie en heures (défaut : 24)
+  ttl_hours: 24
+
+ics:
+  # Minutes avant chaque session pour le rappel VALARM (0 = désactivé)
+  alarm_minutes: 30
+
+providers:
+  formula1:
+    # Activer / désactiver ce championnat (défaut : true — opt-out)
+    enabled: true
+    # Source de données F1 : openf1 (API openf1.org, saisons 2023+)
+    source: openf1
+  formula2:
+    # Activer / désactiver ce championnat (défaut : true — opt-out)
+    enabled: true
+    # Source de données F2 : f1calendar (dataset MIT, github.com/sportstimes/f1)
+    source: f1calendar
+  formula3:
+    # Activer / désactiver ce championnat (défaut : true — opt-out)
+    enabled: true
+    # Source de données F3 : f1calendar (dataset MIT, github.com/sportstimes/f1)
+    # Note : clés de sessions différentes de F2 ("practice" au lieu de "fp1",
+    #         "sprint" au lieu de "sprintRace"). Couverture 2022+.
+    source: f1calendar
+  f1-academy:
+    # Activer / désactiver ce championnat (défaut : true — opt-out)
+    enabled: true
+    # Source de données F1 Academy : f1calendar (dataset MIT, github.com/sportstimes/f1)
+    # Format de sessions : fp1, fp2, qualifying1, [qualifying2], race1, race2, race3
+    # Couverture 2023+. Les saisons antérieures ne sont pas disponibles dans le dataset.
+    source: f1calendar
+  wec:
+    enabled: true
+    # Source de données WEC : official (site FIA WEC — non implémentée)
+    source: official

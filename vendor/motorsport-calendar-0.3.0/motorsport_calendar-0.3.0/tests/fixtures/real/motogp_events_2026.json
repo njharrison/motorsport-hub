@@ -1,0 +1,1002 @@
+[
+  {
+    "id": "412a4e57-758b-4aff-a9a9-0e516b5e1256",
+    "name": "VALENCIA TEST",
+    "shortname": "VC1",
+    "kind": "TEST",
+    "date_start": "2025-11-18T08:00:00+01:00",
+    "date_end": "2025-11-18T22:00:00+01:00",
+    "time_zone": "EUROPE/MADRID",
+    "circuit": {
+      "id": "c5e48a7a-42d3-4e5d-8a40-2efc77eb36b6",
+      "name": "Circuit Ricardo Tormo",
+      "iso_code": "ES",
+      "country": "Spain",
+      "city": "Cheste"
+    },
+    "categories": [
+      {
+        "acronym": "MGP",
+        "name": "MotoGP"
+      }
+    ],
+    "broadcasts": [
+      {
+        "id": "39581e18-3cc9-44f9-b412-3abe0338a456",
+        "shortname": "FP1",
+        "name": "Session 1",
+        "date_start": "2025-11-18T10:00:00+0100",
+        "date_end": "2025-11-18T17:30:00+0100",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MGP"
+        }
+      }
+    ]
+  },
+  {
+    "id": "e4e32344-a8ba-4410-8d24-d488d6f1b300",
+    "name": "PRIMA PRAMAC YAMAHA MotoGP PRESENTATION",
+    "shortname": "PRA",
+    "kind": "MEDIA",
+    "date_start": "2026-01-13T17:30:00+01:00",
+    "date_end": "2026-01-13T23:00:00+01:00",
+    "time_zone": "EUROPE/ROME",
+    "circuit": null,
+    "categories": [
+      {
+        "acronym": "MGP",
+        "name": "MotoGP"
+      }
+    ],
+    "broadcasts": [
+      {
+        "id": "16365376-850b-4c21-ab6e-9364501a3f0a",
+        "shortname": "SHOW",
+        "name": "Presentation",
+        "date_start": "2026-01-13T17:30:00+0100",
+        "date_end": "2026-01-13T23:00:00+0100",
+        "kind": "PRESS",
+        "category": {
+          "acronym": "MGP"
+        }
+      }
+    ]
+  },
+  {
+    "id": "364a0bd9-d3c2-4ab3-a4cd-211ff469953e",
+    "name": "PT GRAND PRIX OF THAILAND ",
+    "shortname": "THA",
+    "kind": "GP",
+    "date_start": "2026-02-27T08:00:00+07:00",
+    "date_end": "2026-03-01T18:00:00+07:00",
+    "time_zone": "ASIA/BANGKOK",
+    "circuit": {
+      "id": "3df492f2-b8e0-4c2b-b6e9-86a153127965",
+      "name": "Chang International Circuit",
+      "iso_code": "TH",
+      "country": "Thailand",
+      "city": "Tambon Isan"
+    },
+    "categories": [
+      {
+        "acronym": "MGP",
+        "name": "MotoGP"
+      },
+      {
+        "acronym": "MT2",
+        "name": "Moto2"
+      },
+      {
+        "acronym": "MT3",
+        "name": "Moto3"
+      }
+    ],
+    "broadcasts": [
+      {
+        "id": "837f0d52-7f8f-467d-aea8-49a92e8b74d7",
+        "shortname": "SHOW",
+        "name": "Group Photo",
+        "date_start": "2026-02-26T15:40:00+0700",
+        "date_end": "2026-02-26T17:20:00+0700",
+        "kind": "PRESS",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "5abd569b-bdd7-4342-be1a-63922b682b10",
+        "shortname": "SHOW",
+        "name": "GearUp",
+        "date_start": "2026-02-26T17:20:00+0700",
+        "date_end": "2026-02-26T18:00:00+0700",
+        "kind": "PRESS",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "53fd2e5b-6b10-4b7d-81f2-59625a411a9d",
+        "shortname": "PRESS",
+        "name": "Pre-Event Press Conference",
+        "date_start": "2026-02-26T18:00:00+0700",
+        "date_end": "2026-02-26T18:30:00+0700",
+        "kind": "PRESS",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "f65b2c4c-4d74-425f-a48b-18f3fd1dc839",
+        "shortname": "FP1",
+        "name": "Free Practice Nr. 1",
+        "date_start": "2026-02-27T09:00:00+0700",
+        "date_end": "2026-02-27T09:35:00+0700",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MT3"
+        }
+      },
+      {
+        "id": "81545817-08fe-4449-9829-901ae1e92fe4",
+        "shortname": "FP1",
+        "name": "Free Practice Nr. 1",
+        "date_start": "2026-02-27T09:50:00+0700",
+        "date_end": "2026-02-27T10:30:00+0700",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MT2"
+        }
+      },
+      {
+        "id": "9e472f78-f147-4813-9107-b8745d83bfcc",
+        "shortname": "FP1",
+        "name": "Free Practice Nr. 1",
+        "date_start": "2026-02-27T10:45:00+0700",
+        "date_end": "2026-02-27T11:30:00+0700",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "60dc3e94-d9ae-4033-8ea9-b4642bea7ad9",
+        "shortname": "PR",
+        "name": "Practice",
+        "date_start": "2026-02-27T13:15:00+0700",
+        "date_end": "2026-02-27T13:50:00+0700",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MT3"
+        }
+      },
+      {
+        "id": "27b75c90-b6f3-4834-87f3-92d30ff56691",
+        "shortname": "PR",
+        "name": "Practice",
+        "date_start": "2026-02-27T14:05:00+0700",
+        "date_end": "2026-02-27T14:45:00+0700",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MT2"
+        }
+      },
+      {
+        "id": "f2fdfff8-33a0-4edd-b8f6-28626cb4c266",
+        "shortname": "PR",
+        "name": "Practice",
+        "date_start": "2026-02-27T15:00:00+0700",
+        "date_end": "2026-02-27T16:00:00+0700",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "75513246-5703-47cd-b8c3-dd1ed86450f2",
+        "shortname": "FP2",
+        "name": "Free Practice Nr. 2",
+        "date_start": "2026-02-28T08:40:00+0700",
+        "date_end": "2026-02-28T09:10:00+0700",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MT3"
+        }
+      },
+      {
+        "id": "f83f9b43-7f55-4ed6-a3b1-beffb3d9fd74",
+        "shortname": "FP2",
+        "name": "Free Practice Nr. 2",
+        "date_start": "2026-02-28T09:25:00+0700",
+        "date_end": "2026-02-28T09:55:00+0700",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MT2"
+        }
+      },
+      {
+        "id": "7221f26b-c137-40a1-bbd3-093a32acb928",
+        "shortname": "FP2",
+        "name": "Free Practice Nr. 2",
+        "date_start": "2026-02-28T10:10:00+0700",
+        "date_end": "2026-02-28T10:40:00+0700",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "033615bb-67a3-4ca9-b693-cff00830cf73",
+        "shortname": "Q1",
+        "name": "Qualifying Nr. 1 ",
+        "date_start": "2026-02-28T10:50:00+0700",
+        "date_end": "2026-02-28T11:05:00+0700",
+        "kind": "QUALIFYING",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "542c16d3-a38e-4a39-8acd-fb2852597c08",
+        "shortname": "Q2",
+        "name": "Qualifying Nr. 2 ",
+        "date_start": "2026-02-28T11:15:00+0700",
+        "date_end": "2026-02-28T11:30:00+0700",
+        "kind": "QUALIFYING",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "564b1c72-f4c6-4fce-90a7-40c580157890",
+        "shortname": "Q1",
+        "name": "Qualifying Nr. 1 ",
+        "date_start": "2026-02-28T12:45:00+0700",
+        "date_end": "2026-02-28T13:00:00+0700",
+        "kind": "QUALIFYING",
+        "category": {
+          "acronym": "MT3"
+        }
+      },
+      {
+        "id": "ddf60f06-7ef1-4f81-bc4f-2fb9109d1d87",
+        "shortname": "Q2",
+        "name": "Qualifying Nr.2",
+        "date_start": "2026-02-28T13:10:00+0700",
+        "date_end": "2026-02-28T13:25:00+0700",
+        "kind": "QUALIFYING",
+        "category": {
+          "acronym": "MT3"
+        }
+      },
+      {
+        "id": "03f6aec5-8bad-49b1-8ff3-aa8b5ec8f2a4",
+        "shortname": "Q1",
+        "name": "Qualifying Nr. 1 ",
+        "date_start": "2026-02-28T13:40:00+0700",
+        "date_end": "2026-02-28T13:55:00+0700",
+        "kind": "QUALIFYING",
+        "category": {
+          "acronym": "MT2"
+        }
+      },
+      {
+        "id": "223b34b9-2e20-4f77-bb98-5bbf1fd808b0",
+        "shortname": "Q2",
+        "name": "Qualifying Nr. 2 ",
+        "date_start": "2026-02-28T14:05:00+0700",
+        "date_end": "2026-02-28T14:20:00+0700",
+        "kind": "QUALIFYING",
+        "category": {
+          "acronym": "MT2"
+        }
+      },
+      {
+        "id": "d6fd67a8-11e0-4b84-b380-e924246a9737",
+        "shortname": "SPR",
+        "name": "Tissot Sprint",
+        "date_start": "2026-02-28T15:00:00+0700",
+        "date_end": "2026-02-28T15:00:00+0700",
+        "kind": "RACE",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "3fc50999-c7ee-49dd-9c9e-b28400533509",
+        "shortname": "WUP",
+        "name": "Warm Up",
+        "date_start": "2026-03-01T10:40:00+0700",
+        "date_end": "2026-03-01T10:50:00+0700",
+        "kind": "WARM_UP",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "bfef942e-bf8d-4e1c-90be-cb83f90082ca",
+        "shortname": "SHOW",
+        "name": "Rider Parade - Tuk-Tuk Challenge",
+        "date_start": "2026-03-01T11:00:00+0700",
+        "date_end": "2026-03-01T11:40:00+0700",
+        "kind": "PRESS",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "82291123-9f3a-4f05-966c-55e7eb6685ac",
+        "shortname": "RAC",
+        "name": "Race",
+        "date_start": "2026-03-01T12:00:00+0700",
+        "date_end": "2026-03-01T12:00:00+0700",
+        "kind": "RACE",
+        "category": {
+          "acronym": "MT3"
+        }
+      },
+      {
+        "id": "a93a11a6-146f-4189-9952-cc0eb3d36962",
+        "shortname": "RAC2",
+        "name": "Race ",
+        "date_start": "2026-03-01T13:15:00+0700",
+        "date_end": "2026-03-01T13:15:00+0700",
+        "kind": "RACE",
+        "category": {
+          "acronym": "MT2"
+        }
+      },
+      {
+        "id": "c12cea30-93e6-4dfc-9f37-05c19e407ee6",
+        "shortname": "RAC",
+        "name": "Grand Prix",
+        "date_start": "2026-03-01T15:00:00+0700",
+        "date_end": "2026-03-01T15:00:00+0700",
+        "kind": "RACE",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "5d0b57be-d4ed-40bc-8545-8ec6231479e7",
+        "shortname": "SHOW",
+        "name": "After the Flag",
+        "date_start": "2026-03-01T16:15:00+0700",
+        "date_end": "2026-03-01T16:40:00+0700",
+        "kind": "PRESS",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "53db9265-e247-4b96-9e36-dc4985c1279f",
+        "shortname": "SHOW",
+        "name": "Sunday Press Conference",
+        "date_start": "2026-03-01T16:40:00+0700",
+        "date_end": "2026-03-01T17:00:00+0700",
+        "kind": "PRESS",
+        "category": {
+          "acronym": "MGP"
+        }
+      }
+    ]
+  },
+  {
+    "id": "8c83648e-8ec9-40f1-9ba0-b0f19883e7d7",
+    "name": "RED BULL GRAND PRIX OF THE UNITED STATES ",
+    "shortname": "USA",
+    "kind": "GP",
+    "date_start": "2026-03-27T08:00:00-05:00",
+    "date_end": "2026-03-29T18:00:00-05:00",
+    "time_zone": "AMERICA/CHICAGO",
+    "circuit": {
+      "id": "a39e1baa-2b1e-4818-95d0-b9b6b7acd881",
+      "name": "Circuit Of The Americas",
+      "iso_code": "US",
+      "country": "United States",
+      "city": ""
+    },
+    "categories": [
+      {
+        "acronym": "MGP",
+        "name": "MotoGP"
+      },
+      {
+        "acronym": "MT2",
+        "name": "Moto2"
+      },
+      {
+        "acronym": "MT3",
+        "name": "Moto3"
+      },
+      {
+        "acronym": "BWC",
+        "name": "Baggers"
+      }
+    ],
+    "broadcasts": [
+      {
+        "id": "1993c636-cd65-4edb-9877-793681f84ef7",
+        "shortname": "SHOW",
+        "name": "GearUp",
+        "date_start": "2026-03-26T11:30:00-0500",
+        "date_end": "2026-03-26T12:00:00-0500",
+        "kind": "PRESS",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "07e1aaf3-5a52-4e28-aba1-4904c0a5ae33",
+        "shortname": "PRESS",
+        "name": "Pre-Event Press Conference",
+        "date_start": "2026-03-26T12:00:00-0500",
+        "date_end": "2026-03-26T12:45:00-0500",
+        "kind": "PRESS",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "4dea8778-cd3b-4aac-82ee-577859395567",
+        "shortname": "FP1",
+        "name": "Free Practice Nr. 1",
+        "date_start": "2026-03-27T08:25:00-0500",
+        "date_end": "2026-03-27T08:45:00-0500",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "BWC"
+        }
+      },
+      {
+        "id": "2d4d439f-7164-4271-bc1b-d36966f0b6a3",
+        "shortname": "FP1",
+        "name": "Free Practice Nr. 1",
+        "date_start": "2026-03-27T09:00:00-0500",
+        "date_end": "2026-03-27T09:35:00-0500",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MT3"
+        }
+      },
+      {
+        "id": "fbf5e960-c192-44a3-94f6-803165eb34f2",
+        "shortname": "FP1",
+        "name": "Free Practice Nr. 1",
+        "date_start": "2026-03-27T09:50:00-0500",
+        "date_end": "2026-03-27T10:30:00-0500",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MT2"
+        }
+      },
+      {
+        "id": "13a53157-537b-43a1-9f58-6715dd17c44e",
+        "shortname": "FP1",
+        "name": "Free Practice Nr. 1",
+        "date_start": "2026-03-27T10:45:00-0500",
+        "date_end": "2026-03-27T11:30:00-0500",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "b7c20978-fb19-4a41-855c-ddffc50540c0",
+        "shortname": "FP2",
+        "name": "Free Practice Nr. 2",
+        "date_start": "2026-03-27T12:05:00-0500",
+        "date_end": "2026-03-27T12:25:00-0500",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "BWC"
+        }
+      },
+      {
+        "id": "251e18a2-1a93-4120-ab17-9f0cd8a16444",
+        "shortname": "PR",
+        "name": "Practice",
+        "date_start": "2026-03-27T13:15:00-0500",
+        "date_end": "2026-03-27T13:50:00-0500",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MT3"
+        }
+      },
+      {
+        "id": "560b0cf6-fcea-411b-be1e-b5bb74ec9245",
+        "shortname": "PR",
+        "name": "Practice",
+        "date_start": "2026-03-27T14:05:00-0500",
+        "date_end": "2026-03-27T14:45:00-0500",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MT2"
+        }
+      },
+      {
+        "id": "6a580c7c-0cc1-45f6-920f-f82325d8c61a",
+        "shortname": "PR",
+        "name": "Practice",
+        "date_start": "2026-03-27T15:00:00-0500",
+        "date_end": "2026-03-27T16:00:00-0500",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "63f2bac9-4fdc-49f9-b84e-91ef6989e76e",
+        "shortname": "QP",
+        "name": "Qualifying Practice",
+        "date_start": "2026-03-27T16:25:00-0500",
+        "date_end": "2026-03-27T16:45:00-0500",
+        "kind": "QUALIFYING",
+        "category": {
+          "acronym": "BWC"
+        }
+      },
+      {
+        "id": "4d09d8c4-37c1-42b9-ab26-d7392079a5bb",
+        "shortname": "FP2",
+        "name": "Free Practice Nr. 2",
+        "date_start": "2026-03-28T08:40:00-0500",
+        "date_end": "2026-03-28T09:10:00-0500",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MT3"
+        }
+      },
+      {
+        "id": "cfb0d2e3-df10-43ec-ae2b-b33d0291f782",
+        "shortname": "FP2",
+        "name": "Free Practice Nr. 2",
+        "date_start": "2026-03-28T09:25:00-0500",
+        "date_end": "2026-03-28T09:55:00-0500",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MT2"
+        }
+      },
+      {
+        "id": "683897bb-5cee-4250-9984-c55cf23279d9",
+        "shortname": "FP2",
+        "name": "Free Practice Nr. 2",
+        "date_start": "2026-03-28T10:10:00-0500",
+        "date_end": "2026-03-28T10:40:00-0500",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "96289ce0-9a83-4f4b-a6af-05b55b1bc41c",
+        "shortname": "Q1",
+        "name": "Qualifying Nr. 1 ",
+        "date_start": "2026-03-28T10:50:00-0500",
+        "date_end": "2026-03-28T11:05:00-0500",
+        "kind": "QUALIFYING",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "5c1df93c-3b99-40a5-ac52-ad78096215c5",
+        "shortname": "Q2",
+        "name": "Qualifying Nr. 2 ",
+        "date_start": "2026-03-28T11:15:00-0500",
+        "date_end": "2026-03-28T11:30:00-0500",
+        "kind": "QUALIFYING",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "a5a7d6ec-f98b-4fbd-8348-3e0cd127bfdf",
+        "shortname": "Q1",
+        "name": "Qualifying Nr. 1 ",
+        "date_start": "2026-03-28T12:45:00-0500",
+        "date_end": "2026-03-28T13:00:00-0500",
+        "kind": "QUALIFYING",
+        "category": {
+          "acronym": "MT3"
+        }
+      },
+      {
+        "id": "8fb23afa-9f5c-40b3-b201-3b474422c78c",
+        "shortname": "Q2",
+        "name": "Qualifying Nr. 2 ",
+        "date_start": "2026-03-28T13:10:00-0500",
+        "date_end": "2026-03-28T13:25:00-0500",
+        "kind": "QUALIFYING",
+        "category": {
+          "acronym": "MT3"
+        }
+      },
+      {
+        "id": "76e329de-6a2a-4b54-892a-e5e85b046a8c",
+        "shortname": "Q1",
+        "name": "Qualifying Nr. 1 ",
+        "date_start": "2026-03-28T13:40:00-0500",
+        "date_end": "2026-03-28T14:10:00-0500",
+        "kind": "QUALIFYING",
+        "category": {
+          "acronym": "MT2"
+        }
+      },
+      {
+        "id": "ba04feab-888d-4965-9d96-8216ed2eac71",
+        "shortname": "Q2",
+        "name": "Qualifying Nr. 2 ",
+        "date_start": "2026-03-28T14:17:00-0500",
+        "date_end": "2026-03-28T14:32:00-0500",
+        "kind": "QUALIFYING",
+        "category": {
+          "acronym": "MT2"
+        }
+      },
+      {
+        "id": "f6353058-e7a5-4a50-b03d-c8f2bea69c00",
+        "shortname": "SPR",
+        "name": "Tissot Sprint",
+        "date_start": "2026-03-28T15:10:00-0500",
+        "date_end": "2026-03-28T15:10:00-0500",
+        "kind": "RACE",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "bf0fd559-1747-418a-9027-36ea52b6192f",
+        "shortname": "RAC1",
+        "name": "Race Nr. 1",
+        "date_start": "2026-03-28T16:15:00-0500",
+        "date_end": "2026-03-28T16:15:00-0500",
+        "kind": "RACE",
+        "category": {
+          "acronym": "BWC"
+        }
+      },
+      {
+        "id": "39e11996-697a-431b-a4cd-b1236ef1c7e7",
+        "shortname": "RAC2",
+        "name": "Race Nr. 2",
+        "date_start": "2026-03-29T09:45:00-0500",
+        "date_end": "2026-03-29T09:45:00-0500",
+        "kind": "RACE",
+        "category": {
+          "acronym": "BWC"
+        }
+      },
+      {
+        "id": "91c92c62-9035-4b0b-aa32-9407322fcecf",
+        "shortname": "WUP",
+        "name": "Warm Up",
+        "date_start": "2026-03-29T10:40:00-0500",
+        "date_end": "2026-03-29T10:50:00-0500",
+        "kind": "WARM_UP",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "367e983b-99d6-42ce-bdbc-7f165ec332de",
+        "shortname": "SHOW",
+        "name": "Baseball Challenge",
+        "date_start": "2026-03-29T11:00:00-0500",
+        "date_end": "2026-03-29T11:40:00-0500",
+        "kind": "PRESS",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "fd3650d7-e2af-4fde-94b6-1233d1793a4f",
+        "shortname": "RAC",
+        "name": "Race",
+        "date_start": "2026-03-29T12:00:00-0500",
+        "date_end": "2026-03-29T12:00:00-0500",
+        "kind": "RACE",
+        "category": {
+          "acronym": "MT3"
+        }
+      },
+      {
+        "id": "8375047b-8567-4f2d-8f4c-c63de3edc89d",
+        "shortname": "RAC",
+        "name": "Race",
+        "date_start": "2026-03-29T13:15:00-0500",
+        "date_end": "2026-03-29T13:15:00-0500",
+        "kind": "RACE",
+        "category": {
+          "acronym": "MT2"
+        }
+      },
+      {
+        "id": "82fb8672-02fb-4ff4-827c-d5deb353019c",
+        "shortname": "RAC",
+        "name": "Grand Prix",
+        "date_start": "2026-03-29T15:00:00-0500",
+        "date_end": "2026-03-29T15:00:00-0500",
+        "kind": "RACE",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "ec02c0dd-e1bf-4379-a2b8-67819ae498f1",
+        "shortname": "SHOW",
+        "name": "After the Flag",
+        "date_start": "2026-03-29T16:20:00-0500",
+        "date_end": "2026-03-29T16:45:00-0500",
+        "kind": "PRESS",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "7783ccb1-57f8-4350-80b9-8cad54f5c7cf",
+        "shortname": "SHOW",
+        "name": "Sunday Press Conference",
+        "date_start": "2026-03-29T16:45:00-0500",
+        "date_end": "2026-03-29T17:10:00-0500",
+        "kind": "PRESS",
+        "category": {
+          "acronym": "MGP"
+        }
+      }
+    ]
+  },
+  {
+    "id": "6ad2859f-51c4-459e-9714-338814e7537f",
+    "name": "MOTUL GRAND PRIX OF VALENCIA",
+    "shortname": "VAL",
+    "kind": "GP",
+    "date_start": "2026-11-27T08:00:00+01:00",
+    "date_end": "2026-11-29T18:00:00+01:00",
+    "time_zone": "EUROPE/MADRID",
+    "circuit": {
+      "id": "c5e48a7a-42d3-4e5d-8a40-2efc77eb36b6",
+      "name": "Circuit Ricardo Tormo",
+      "iso_code": "ES",
+      "country": "Spain",
+      "city": "Cheste"
+    },
+    "categories": [
+      {
+        "acronym": "MGP",
+        "name": "MotoGP"
+      },
+      {
+        "acronym": "MT2",
+        "name": "Moto2"
+      },
+      {
+        "acronym": "MT3",
+        "name": "Moto3"
+      }
+    ],
+    "broadcasts": [
+      {
+        "id": "209bb221-d97a-46c8-9828-1170afed6bbd",
+        "shortname": "FP1",
+        "name": "Free Practice Nr. 1",
+        "date_start": "2026-11-27T09:00:00+0100",
+        "date_end": "2026-11-27T09:35:00+0100",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MT3"
+        }
+      },
+      {
+        "id": "fed00d5a-2d10-4093-a6d4-4275a7cb9dc0",
+        "shortname": "FP1",
+        "name": "Free Practice Nr. 1",
+        "date_start": "2026-11-27T09:50:00+0100",
+        "date_end": "2026-11-27T10:30:00+0100",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MT2"
+        }
+      },
+      {
+        "id": "71f9e968-f903-4055-9f73-065fc0bb0253",
+        "shortname": "FP1",
+        "name": "Free Practice Nr. 1",
+        "date_start": "2026-11-27T10:45:00+0100",
+        "date_end": "2026-11-27T11:30:00+0100",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "c05038c6-bcca-4f0d-891b-ed069b6e4443",
+        "shortname": "PR",
+        "name": "Practice",
+        "date_start": "2026-11-27T13:15:00+0100",
+        "date_end": "2026-11-27T13:50:00+0100",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MT3"
+        }
+      },
+      {
+        "id": "31174982-03e5-4d26-90d9-9571aff776ab",
+        "shortname": "PR",
+        "name": "Practice",
+        "date_start": "2026-11-27T14:05:00+0100",
+        "date_end": "2026-11-27T14:45:00+0100",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MT2"
+        }
+      },
+      {
+        "id": "5f93fe34-b37a-4008-abfb-b8f3b5ce26c6",
+        "shortname": "PR",
+        "name": "Practice",
+        "date_start": "2026-11-27T15:00:00+0100",
+        "date_end": "2026-11-27T16:00:00+0100",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "cdc0cd06-d22f-488b-9a26-561b9265f81f",
+        "shortname": "FP2",
+        "name": "Free Practice Nr. 2",
+        "date_start": "2026-11-28T08:40:00+0100",
+        "date_end": "2026-11-28T09:10:00+0100",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MT3"
+        }
+      },
+      {
+        "id": "6456e6f4-9829-4684-902a-7c11ea6b4f68",
+        "shortname": "FP2",
+        "name": "Free Practice Nr. 2",
+        "date_start": "2026-11-28T09:25:00+0100",
+        "date_end": "2026-11-28T09:55:00+0100",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MT2"
+        }
+      },
+      {
+        "id": "fb21f35b-ee41-496d-996e-46362bff404c",
+        "shortname": "FP2",
+        "name": "Free Practice Nr. 2",
+        "date_start": "2026-11-28T10:10:00+0100",
+        "date_end": "2026-11-28T10:40:00+0100",
+        "kind": "PRACTICE",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "00c5fa9e-b664-4bad-b40f-f197c1e9f3ef",
+        "shortname": "Q1",
+        "name": "Qualifying Nr. 1 ",
+        "date_start": "2026-11-28T10:50:00+0100",
+        "date_end": "2026-11-28T11:05:00+0100",
+        "kind": "QUALIFYING",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "10c658ee-9276-48fd-977c-c9c739f1db83",
+        "shortname": "Q2",
+        "name": "Qualifying Nr. 2 ",
+        "date_start": "2026-11-28T11:15:00+0100",
+        "date_end": "2026-11-28T11:30:00+0100",
+        "kind": "QUALIFYING",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "2ad4bd98-5e32-4423-a8b9-f81fb5cf6ae7",
+        "shortname": "Q1",
+        "name": "Qualifying Nr. 1 ",
+        "date_start": "2026-11-28T12:45:00+0100",
+        "date_end": "2026-11-28T13:00:00+0100",
+        "kind": "QUALIFYING",
+        "category": {
+          "acronym": "MT3"
+        }
+      },
+      {
+        "id": "95271861-8165-482c-9e07-d748c52f3258",
+        "shortname": "Q2",
+        "name": "Qualifying Nr. 2 ",
+        "date_start": "2026-11-28T13:10:00+0100",
+        "date_end": "2026-11-28T13:25:00+0100",
+        "kind": "QUALIFYING",
+        "category": {
+          "acronym": "MT3"
+        }
+      },
+      {
+        "id": "e070e8c9-b137-4bd0-81c0-5bdd2713e1e7",
+        "shortname": "Q1",
+        "name": "Qualifying Nr. 1 ",
+        "date_start": "2026-11-28T13:40:00+0100",
+        "date_end": "2026-11-28T13:55:00+0100",
+        "kind": "QUALIFYING",
+        "category": {
+          "acronym": "MT2"
+        }
+      },
+      {
+        "id": "7865254f-1269-4c23-9c86-6080640a7805",
+        "shortname": "Q2",
+        "name": "Qualifying Nr. 2 ",
+        "date_start": "2026-11-28T14:05:00+0100",
+        "date_end": "2026-11-28T14:20:00+0100",
+        "kind": "QUALIFYING",
+        "category": {
+          "acronym": "MT2"
+        }
+      },
+      {
+        "id": "44f9a01f-468a-4a50-8ebc-7b90441f946b",
+        "shortname": "SPR",
+        "name": "Tissot Sprint",
+        "date_start": "2026-11-28T15:00:00+0100",
+        "date_end": "2026-11-28T15:00:00+0100",
+        "kind": "RACE",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "c6ad4ab8-f150-48c9-af49-ce5eed2128d5",
+        "shortname": "WUP",
+        "name": "Warm Up",
+        "date_start": "2026-11-29T09:40:00+0100",
+        "date_end": "2026-11-29T09:50:00+0100",
+        "kind": "WARM_UP",
+        "category": {
+          "acronym": "MGP"
+        }
+      },
+      {
+        "id": "9d8cf718-d04e-439a-9e05-8f791356add7",
+        "shortname": "RAC",
+        "name": "Race",
+        "date_start": "2026-11-29T11:00:00+0100",
+        "date_end": "2026-11-29T11:00:00+0100",
+        "kind": "RACE",
+        "category": {
+          "acronym": "MT3"
+        }
+      },
+      {
+        "id": "42a96ebe-f78b-40cf-8ebd-2ce11dc11675",
+        "shortname": "RAC",
+        "name": "Race",
+        "date_start": "2026-11-29T12:15:00+0100",
+        "date_end": "2026-11-29T12:15:00+0100",
+        "kind": "RACE",
+        "category": {
+          "acronym": "MT2"
+        }
+      },
+      {
+        "id": "6e389f60-9115-472c-b943-b86a2d9a0a62",
+        "shortname": "RAC",
+        "name": "Grand Prix",
+        "date_start": "2026-11-29T14:00:00+0100",
+        "date_end": "2026-11-29T14:00:00+0100",
+        "kind": "RACE",
+        "category": {
+          "acronym": "MGP"
+        }
+      }
+    ]
+  }
+]

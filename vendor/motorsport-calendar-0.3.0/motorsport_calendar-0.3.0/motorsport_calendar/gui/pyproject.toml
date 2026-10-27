@@ -1,0 +1,91 @@
+# Build-only manifest for `flet build` — NOT an installable package, never
+# published, never read by pip/hatchling (the real package manifest is the
+# repo root's own pyproject.toml).
+#
+# Why this file exists (Sprint 58/59 — Validation & correction packaging):
+# `flet build linux motorsport_calendar/gui --module-name app` points
+# `python_app_path` at this directory. Flet's own build tooling
+# (`flet_cli/commands/build_base.py::load_pyproject_toml`) reads
+# `pyproject.toml` *from that exact directory*, never the project root —
+# confirmed by reading flet_cli's installed source, not guessed. Without a
+# pyproject.toml here, `flet build` had nothing to read, so it bundled only
+# Flet's own dependencies and every compiled build crashed instantly with
+# `ModuleNotFoundError: No module named 'motorsport_calendar'`.
+#
+# Two distinct problems, both fixed here, both verified by an actual
+# rebuild + a real launch of the compiled binary (not assumed):
+#
+# 1. Missing runtime dependencies — fixed by `[project.dependencies]`
+#    below existing at all (this file didn't exist before).
+# 2. The `motorsport_calendar` package itself was never bundled, even
+#    once (1) was fixed. `flet build` zips *the contents* of whichever
+#    directory it points at — `motorsport_calendar/gui/`'s own files
+#    (`main_view.py`, `strings.py`, ...), flattened, with no
+#    `motorsport_calendar.` package wrapper. Every one of those files
+#    uses absolute imports (`from motorsport_calendar.gui.controller
+#    import ...`), which can never resolve from a flattened bundle no
+#    matter how many dependencies are listed. Fixed with `tool.flet.
+#    dev_packages` below: it tells `flet build` to `pip install` this
+#    project itself from its real root (`../..`, relative to this file)
+#    as a genuine local package — the exact mechanism Flet provides for
+#    "a dependency I'm developing locally, not on PyPI yet". This
+#    produces a correctly nested `site-packages/motorsport_calendar/`
+#    (built by the SAME hatchling config the root pyproject.toml already
+#    uses — `packages = ["motorsport_calendar"]` — nothing new to
+#    maintain) that `import motorsport_calendar.gui.main_view` actually
+#    resolves against. Installing `motorsport-calendar` this way also
+#    pulls in its own declared dependencies (typer/rich/pydantic/
+#    icalendar/httpx/tzdata/pyyaml/beautifulsoup4/lxml) transitively —
+#    the root pyproject.toml's `[project.dependencies]` is the *only*
+#    place that list is declared; nothing to keep in sync here.
+#
+# This is the officially-supported Flet mechanism for "my Flet app is a
+# subdirectory of a larger project, not the whole repo" — a pyproject.toml
+# co-located with the app's entry point (the same shape `flet create`
+# scaffolds for a brand-new project) plus `tool.flet.dev_packages` for the
+# parent project as a local dependency.
+#
+# MC-002 (P0-5) — embedded build version root-caused and fixed:
+# `flet_cli` does read `project.version` above and correctly passes it as
+# `flutter build ... --build-name=<version>` (confirmed by reading
+# `flet_cli/commands/build.py::add_flutter_command_args` directly, not
+# guessed) — that flag genuinely stamps the final native package's own
+# version metadata. It does NOT rewrite the underlying Flutter scaffold's
+# `pubspec.yaml` on disk, though, and Flutter's own build step generates
+# `data/flutter_assets/version.json` by reading `pubspec.yaml`'s literal
+# `version:` line directly — which `flet create`'s cookiecutter template
+# seeds with a generic `1.0.0+1` default that nothing was ever telling it
+# to override. `[tool.flet.flutter.pubspec]` below is Flet's own supported
+# extension point for exactly this (confirmed in
+# `build_base.py::build_flutter_dir`: keys here are merged straight into
+# the generated `pubspec.yaml` before build): setting `version` here makes
+# `flutter_assets/version.json` correct too, not just the native package
+# metadata.
+# Caveat, load-bearing for the release process (see docs/RELEASE.md): this
+# merge only runs when the Flutter scaffold is actually (re)generated —
+# Flet skips it entirely when reusing an existing, unchanged
+# `motorsport_calendar/gui/build/` cache (the exact scenario that shipped
+# the stale `1.0.0` in the first place, Sprint 59). A release build must
+# start from a deleted/absent `motorsport_calendar/gui/build/` directory,
+# every time — `docs/RELEASE.md` says so explicitly now.
+# The `+1` below is Flutter's required pubspec build-number suffix
+# (distinct from the semantic version); bump it only if it ever needs to
+# mean something to an app store listing — irrelevant for a plain binary
+# distribution, kept at `+1` as a stable placeholder.
+
+[project]
+name = "motorsport-calendar"
+version = "0.3.0"
+dependencies = [
+    "flet>=0.80",
+    "motorsport-calendar",
+]
+
+[tool.flet.app]
+module = "app"
+
+[tool.flet.dev_packages]
+motorsport-calendar = "../.."
+
+[tool.flet.flutter.pubspec]
+version = "0.3.0+1"
