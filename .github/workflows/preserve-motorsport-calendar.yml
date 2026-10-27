@@ -1,0 +1,51 @@
+name: Preserve motorsport-calendar source
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/preserve-motorsport-calendar.yml'
+permissions:
+  contents: write
+jobs:
+  preserve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Download, verify and preserve upstream source distribution
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib, io, json, pathlib, tarfile, urllib.request
+          version='0.3.0'
+          expected='be99fa6204225a95afa3dc11b8d7cb6770636ceb4bc56dc6ffdad1688bdd6f92'
+          metadata=json.load(urllib.request.urlopen('https://pypi.org/pypi/motorsport-calendar/0.3.0/json',timeout=30))
+          item=next(x for x in metadata['urls'] if x['filename']=='motorsport_calendar-0.3.0.tar.gz')
+          data=urllib.request.urlopen(item['url'],timeout=60).read()
+          assert hashlib.sha256(data).hexdigest()==expected, 'PyPI source archive checksum mismatch'
+          root=pathlib.Path('vendor/motorsport-calendar-0.3.0')
+          root.mkdir(parents=True,exist_ok=True)
+          (root/'motorsport_calendar-0.3.0.tar.gz').write_bytes(data)
+          with tarfile.open(fileobj=io.BytesIO(data),mode='r:gz') as archive:
+              for member in archive.getmembers():
+                  name=pathlib.PurePosixPath(member.name)
+                  if '..' in name.parts or member.issym() or member.islnk():raise ValueError('Unsafe archive entry')
+              archive.extractall(root,filter='data')
+          (root/'README-PRESERVATION.md').write_text(
+              '# Archived upstream source\n\n'
+              'motorsport-calendar 0.3.0, copyright 2026 Alan Yvenou, MIT licence.\n'
+              'Original distribution: https://pypi.org/project/motorsport-calendar/0.3.0/\n'
+              'SHA-256 of .tar.gz: '+expected+'\n\n'
+              'This is a preserved source snapshot, not yet used by the application.\n'
+          )
+          PY
+      - name: Commit verified archive
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add vendor/motorsport-calendar-0.3.0
+          if ! git diff --cached --quiet; then
+            git commit -m "Preserve verified motorsport-calendar 0.3.0 source archive"
+            git push
+          fi
